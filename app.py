@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from sqlalchemy import desc
 from encoder import make_taste_list, insert
-#import recipeSearch
+import recipeSearch
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///frire.db'
@@ -13,6 +13,7 @@ class FridgeItem(db.Model):
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
   itemName = db.Column(db.String(30), nullable=False)
   itemNum = db.Column(db.Integer, nullable=False)
+  itemCost = db.Column(db.Integer)
   expiryDate = db.Column(db.DateTime, nullable=False)
 
 class Recipes(db.Model):
@@ -29,7 +30,7 @@ onClick = 0
 
 @app.route('/')
 def index():
-  menu_titles = {'fridgeItem':"冷蔵庫の中身", 'recipe':"レシピ", 'calender':"食事カレンダー", 'goal':"あなたの目標", 'create':"レシート読み取り", 'cost':"食材費"}
+  menu_titles = {'fridgeItem':"冷蔵庫の中身", 'recipe':"レシピ", 'calender':"食事カレンダー", 'goal':"あなたの目標", 'create':"食材登録", 'cost':"食材費"}
   return render_template('index.html', menu_titles=menu_titles)
 
 
@@ -41,14 +42,15 @@ def fridgeItem():
   else:
     itemName = request.form.get('itemName')
     itemNum = request.form.get('itemNum')
+    itemCost = request.form.get('itemCost')
     expiryDate = request.form.get('expiryDate')
 
     expiryDate = datetime.strptime(expiryDate, '%Y-%m-%d')
-    new_post = FridgeItem(itemName=itemName, itemNum=itemNum, expiryDate=expiryDate)
+    new_post = FridgeItem(itemName=itemName, itemNum=itemNum, itemCost=itemCost, expiryDate=expiryDate)
 
     db.session.add(new_post)
     db.session.commit()
-    #recipeSearch.recipe_update()
+    recipeSearch.recipe_update(db, FridgeItem, Recipes)
     return redirect('/fridgeItem')
     
 

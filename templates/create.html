@@ -1,15 +1,23 @@
 {% extends 'base.html' %}
 
+{% block head %}
+<link rel="stylesheet" href="static/css/create.css">
+{% endblock %}
+
 {% block body %}
 <h2 class="page-menu-title">食材登録</h2>
 <form class="m-5" action="/fridgeItem" method="POST">
-  <div class="mb-3 pd-3">
+  <div class="mb-3 pd-3 form-itemName">
     <label for="itemName" class="form-label">食材名</label>
     <input type="text" class="form-control" name="itemName">
   </div>
   <div class="mb-3 pb-3">
     <label for="itemNum" class="form-label">個数</label>
     <input type="number" class="form-control" name="itemNum">
+  </div>
+  <div class="mb-3 pb-3">
+    <label for="itemCost" class="form-label">値段</label>
+    <input type="number" class="form-control" name="itemCost">
   </div>
   <div class="mb-3 pb-3">
     <label for="due">賞味期限</label>

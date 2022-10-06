@@ -2,9 +2,10 @@ import csv
 import requests
 import pandas as pd
 import time
-from InitialSetting import db, FridgeItem, Recipes
 
-def recipe_update(fridge_items = FridgeItem.query.filter(FridgeItem.itemName != None)):
+def recipe_update(db, FridgeItem, Recipes):
+  fridge_items = FridgeItem.query.filter(FridgeItem.itemName != None)
+
   for fridge_item in fridge_items:
     df_rank = read_csv(fridge_item.itemName)
     expiryDate = fridge_item.expiryDate
@@ -17,7 +18,7 @@ def recipe_update(fridge_items = FridgeItem.query.filter(FridgeItem.itemName != 
       pass
 
     recipeItems = zip(recipeNames, cookTimes, recipeImgs)
-    recipeItems = delete_duplicationData(recipeItems)
+    recipeItems = delete_duplicationData(Recipes, recipeItems)
 
     for recipeName, cookTime, recipeImg in recipeItems:
       recipeImg = f'<img src="{recipeImg}" class="card-img-top" alt="">'
@@ -114,7 +115,7 @@ def search_recipe(ID):
   
   return df_rank
 
-def delete_duplicationData(newRecipeItems):
+def delete_duplicationData(Recipes, newRecipeItems):
   recipeItems = Recipes.query.all()  
   
   recipeNames = []
