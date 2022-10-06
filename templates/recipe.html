@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="static/css/recipe.css">
+{% endblock %}
+
+{% block body %}
+<h2 class="page-menu-title">レシピ一覧</h2>
+<div class="yourfeel wrapper">
+  <ul class="gnav">
+    <li>
+      <button class="btn btn-secondary"  type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+        <i class="fa-solid fa-caret-right"></i>あなたの気分は?
+      </button>
+      <ul class="drop-menu">
+        <form action="/recipe" method="POST">
+          {% for feelButton in feelButtons %}
+          <li>
+            {% autoescape False %}
+              {{ feelButton }}
+            {% endautoescape %}
+          </li>
+          {% endfor %}
+        </form>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div class="cards">
+  {% for recipe_item in recipe_items%}
+  <div class="card" style="width: 20rem; height: 25rem;">
+    {% autoescape False %}
+      {{ recipe_item.recipeImg }}
+    {% endautoescape %}
+    <div class="card-body">
+      <p class="card-text text-center" style="font-size: 20px;">{{ recipe_item.recipeName }}<br>時間：{{ recipe_item.cookTime }}<br>スコア：{{ recipe_item.recommendPoint }}<br>賞味期限：{{ recipe_item.expiryDate.date() }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div><!-- /.cards -->
+
+{% endblock %}

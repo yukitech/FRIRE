@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h2 class="page-menu-title">食材登録</h2>
+<form class="m-5" action="/fridgeItem" method="POST">
+  <p style="text-align: center; font-size: 28px;">アップロードするレシート画像を<br>選択して下さい</p>
+  <p style="text-align: center;"><input type="file" name="upload" accept=".png, .jpg, .jpeg"></p>
+</form>
+{% endblock %}

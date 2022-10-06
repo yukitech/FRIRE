@@ -1,0 +1,42 @@
+header {
+  height: 150px;
+}
+nav {
+  display: none;
+}
+main {
+  margin-bottom: 30px;
+}
+.top-menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-around;
+  width: 300px;
+  height: 450px;
+  margin: 0 auto;
+}
+.top-menu-item p{
+  text-align: center;
+}
+.circle {	
+  position: relative;
+  display: inline-block;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: skyblue;
+}
+.circle span {
+  position: absolute;
+  display: inline-block;
+  left: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width :120px;
+  text-align:center;
+}
+img {
+  width: 70px;
+}

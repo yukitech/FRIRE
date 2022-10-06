@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block head%}
+<link rel="stylesheet" href="static/css/index.css">
+{% endblock %}
+
+{% block body %}
+<main>
+  <div class="wrapper">
+    <h2 class="page-menu-title">メニュー</h2>
+    <div class="top-menu">
+      {% for menu_title_path in menu_titles%}
+      <div class="top-menu-item">
+        <a class="circle" href="/{{menu_title_path}}">
+          <span>
+            <img src="static/imgs/{{menu_title_path}}.png" alt="">
+          </span>
+        </a>
+        <p>{{menu_titles[menu_title_path]}}</p>
+      </div><!-- /.top-menu-item -->
+      {% endfor %}
+    </div><!-- /.top-menu -->
+  </div><!-- /.wrapper -->
+</main>
+{% endblock %}

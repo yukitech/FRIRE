@@ -1,0 +1,99 @@
+.cards {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+.card {
+  margin-bottom: 55px;
+}
+.card-img-top {
+  object-fit: cover;
+  width: 310px;
+  height: 280px;
+}
+.card-body {
+  height: 115px;
+  padding: 0px;
+}
+.yourfeel {
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.btn {
+  width: 300px;
+  background-color: rgb(96, 160, 209);
+}
+.btn:hover {
+  background-color: rgb(90, 148, 192);
+}
+.btn:focus {
+  background-color: rgb(39, 131, 202);
+}
+.btn:active {
+  background-color: rgb(90, 148, 192);
+}
+.fa-caret-right {
+  margin-right: 12px;
+  font-size: 20px;
+}
+.drop-menu {
+  width: 250px;
+  padding: 0;
+  background-color: aliceblue;
+  z-index: 100;
+}
+.drop-menu li {
+  text-align: center;
+}
+.gnav {
+  padding-right: 200px;
+}
+.gnav li{
+  float: left;
+  padding: 0 15px;
+  font-size: 17px;
+  position: relative;
+  left: 80px;
+}
+.gnav li ul {
+  position: absolute;
+  top: 45px;
+  left: -5px;
+  height: 0;
+  visibility: hidden;
+}
+.gnav li a {
+  display: block;
+  padding-bottom: 20px;
+}
+.gnav li a:hover {
+  color: #c49029;
+  transition: 0.1s;
+}
+.gnav li li {
+  width: 200px;
+  border: 1px solid #f0f0f0;
+  padding: 0;
+  box-shadow: 0.5px 0.5px #f0f0f0;
+  background-color: white;
+  opacity: 0;
+  transition: 0.3s;
+}
+.gnav li li button {
+  border: none;
+  background-color: white;
+  width: 180px;
+  height: 40px;
+}
+.gnav li li button:active {
+  background-color: rgb(205, 199, 199);
+}
+.gnav li li:hover {
+  background-color: rgb(205, 199, 199);
+}
+.gnav li:hover ul li{
+  visibility: visible;
+  opacity: 1;
+}
