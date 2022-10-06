@@ -1,3 +1,59 @@
+body {
+  position: relative;
+}
+/* form {
+  position: relative;
+} */
 .form-itemName {
   padding-bottom: 16px;
+}
+.loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(126, 199, 216, 0.5);
+}
+.loader__spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  transform: translate(-50%, -50%);
+  /* margin: 100px auto; */
+}
+.loader__spinner p {
+  position: absolute;
+  top: 120px;
+  left: -10px;
+  width: 120px;
+  font-size: 24px;
+  color: #0086AD;
+}
+.loader__double-bounce1, .loader__double-bounce2 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: white;
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: sk-bounce 2.0s infinite ease-in-out;
+}
+
+.loader__double-bounce2 {
+  animation-delay: -1.0s;
+}
+
+@keyframes sk-bounce {
+  0%, 100% { 
+    transform: scale(0.0);
+  } 50% { 
+    transform: scale(1.0);
+  }
 }

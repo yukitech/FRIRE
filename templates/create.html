@@ -25,5 +25,30 @@
   </div>
   <a class="btn btn-outline-primary" href="/" role="button">ホームに戻る</a>
   <button type="submit" class="btn btn-primary" value="Create">作成</button>
+
+  <div class="loader">
+    <div class="loader__spinner">
+      <div class="loader__double-bounce1"></div>
+      <div class="loader__double-bounce2"></div>
+      <p>食材登録中</p>
+    </div>
+  </div><!-- /.loader -->
 </form>
+<script>
+  const myFunc = ()=>{  
+    const form = document.forms[0];
+    const button = form.querySelector('button');
+    const loader = form.querySelector('.loader');
+
+    button.addEventListener('click', (e)=>{
+      //ローダーを表示する
+      loader.style.display = 'block';
+      
+      //～
+      //非同期処理追加
+      //～
+    }, false);
+  };
+  myFunc();
+</script>
 {% endblock %}
