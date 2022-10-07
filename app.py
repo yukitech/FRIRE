@@ -71,7 +71,7 @@ def recipe():
 
     feelButtons = []
     for feel_key, feel_value in feellists.items():
-      feel = f'<button type="submit" name="action" value="{feel_value}"> { feel_key } </button>' 
+      feel = f'<button class="feel_button" type="submit" name="action" value="{feel_value}"> { feel_key } </button>' 
       feelButtons.append(feel)
     
     return render_template('recipe.html', recipe_items = posts, feelButtons = feelButtons)
