@@ -40,4 +40,32 @@
   {% endfor %}
 </div><!-- /.cards -->
 
+<div class="loader">
+  <div class="loader__spinner">
+    <div class="loader__double-bounce1"></div>
+    <div class="loader__double-bounce2"></div>
+    <p>レシピ更新中</p>
+  </div>
+</div><!-- /.loader -->
+
+<script>
+  const myFunc = ()=>{  
+    const form = document.forms[0];
+    const buttons = form.querySelectorAll('.feel_button');
+    const loader = document.querySelector('.loader');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', (e)=>{
+        //ローダーを表示する
+        loader.style.display = 'block';
+      
+        //～
+        //非同期処理追加
+        //～
+      }, false);
+    });
+  };
+  myFunc();
+</script>
+
 {% endblock %}
