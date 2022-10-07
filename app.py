@@ -1,13 +1,25 @@
 from flask import Flask, redirect, render_template, request
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required
 from datetime import datetime
 from sqlalchemy import desc
+from werkzeug.security import generate_password_hash, check_password_hash
+import os
 from encoder import make_taste_list, insert
 import recipeSearch
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///frire.db'
+app.config['SECRET_KEY'] = os.urandom(24)
 db = SQLAlchemy(app)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+class User(UserMixin, db.Model):
+  id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+  username = db.Column(db.String(30), nullable=False, unique=True)
+  password = db.Column(db.String(12), nullable=False)
 
 class FridgeItem(db.Model):
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -25,16 +37,58 @@ class Recipes(db.Model):
   recommendPoint = db.Column(db.Float, nullable=False)
   expiryDate = db.Column(db.DateTime, nullable=False)
 
-
 onClick = 0
 
+@login_manager.user_loader
+def load_user(user_id):
+  return User.query.get(int(user_id))
+
+@login_manager.unauthorized_handler
+def unauthorized():
+  return redirect('/login')
+
 @app.route('/')
+@login_required
 def index():
   menu_titles = {'fridgeItem':"冷蔵庫の中身", 'recipe':"レシピ", 'calender':"食事カレンダー", 'goal':"あなたの目標", 'create':"食材登録", 'cost':"食材費"}
   return render_template('index.html', menu_titles=menu_titles)
 
+@app.route('/signup', methods=['GET','POST'])
+def signup():
+  if request.method == 'POST':
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    user = User(username=username, password=generate_password_hash(password, method='sha256'))
+
+    db.session.add(user)
+    db.session.commit()
+    return redirect('/login')
+  else:
+    return render_template('signup.html')
+
+@app.route('/login', methods=['GET','POST'])
+def login():
+  if request.method == 'POST':
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    user = User.query.filter_by(username=username).first()
+    if check_password_hash(user.password, password):
+      login_user(user)
+      return redirect('/')
+
+  else:
+    return render_template('login.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+  logout_user()
+  return redirect('/login')
 
 @app.route('/fridgeItem', methods=['GET','POST'])
+@login_required
 def fridgeItem():
   if request.method == 'GET':
     posts = FridgeItem.query.all()
@@ -55,10 +109,12 @@ def fridgeItem():
     
 
 @app.route('/create')
+@login_required
 def create():
   return render_template('create.html')
 
 @app.route('/recipe', methods=['GET','POST'])
+@login_required
 def recipe():
   global onClick
   if request.method == 'GET':
