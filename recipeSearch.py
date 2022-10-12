@@ -3,8 +3,8 @@ import requests
 import pandas as pd
 import time
 
-def recipe_update(db, FridgeItem, Recipes):
-  fridge_items = FridgeItem.query.filter(FridgeItem.itemName != None)
+def recipe_update(db, FridgeItem, Recipes, userid):
+  fridge_items = FridgeItem.query.filter(FridgeItem.itemName != None, FridgeItem.userid == userid)
 
   for fridge_item in fridge_items:
     df_rank = read_csv(fridge_item.itemName)
@@ -18,11 +18,11 @@ def recipe_update(db, FridgeItem, Recipes):
       pass
 
     recipeItems = zip(recipeNames, cookTimes, recipeImgs)
-    recipeItems = delete_duplicationData(Recipes, recipeItems)
+    recipeItems = delete_duplicationData(Recipes, recipeItems, userid)
 
     for recipeName, cookTime, recipeImg in recipeItems:
       recipeImg = f'<img src="{recipeImg}" class="card-img-top" alt="">'
-      new_post = Recipes(recipeName=recipeName, cookTime=cookTime, material="あいうえお", recipeImg=recipeImg, recommendPoint=1.0, expiryDate=expiryDate)
+      new_post = Recipes(recipeName=recipeName, cookTime=cookTime, material="あいうえお", recipeImg=recipeImg, recommendPoint=1.0, expiryDate=expiryDate, userid=userid)
       db.session.add(new_post)
 
   db.session.commit()
@@ -115,9 +115,9 @@ def search_recipe(ID):
   
   return df_rank
 
-def delete_duplicationData(Recipes, newRecipeItems):
-  recipeItems = Recipes.query.all()  
-  
+def delete_duplicationData(Recipes, newRecipeItems, userid):
+  recipeItems = Recipes.query.filter_by(userid=userid).all()  
+
   recipeNames = []
   cookTimes = []
   recipeImgs = []
