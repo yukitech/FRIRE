@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="static/css/login_signup.css">
+{% endblock %}
+
+{% block body %}
+<main>
+  <h1 class="title">FRIRE</h1>
+  <div class="container">
+    <h1>ログイン</h1>
+    <form class="m-5" method="POST">
+      <li>
+        <label for="" class="form-label">ユーザー名</label>
+        <input type="text" class="form-control" name="username">
+      </li>
+      <li class="form-password">
+        <label for="" class="form-label">パスワード</label>
+        <input type="password" class="form-control" name="password">
+      </li>
+      <button type="submit" class="btn btn-outline-info btn-lg">ログイン</button>
+    </form>
+    <p class="switch-bar">または</p>
+    <button type="button" class="btn btn-outline-primary btn-lg" onclick="location.href='/signup'">
+      新規登録
+    </button>
+  </div><!-- /.container -->
+</main>
+{% endblock %}
